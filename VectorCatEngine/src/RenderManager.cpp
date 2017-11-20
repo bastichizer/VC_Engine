@@ -10,7 +10,8 @@ RenderManager::RenderManager() :
 	m_pDevice(NULL),
 	m_pSwapChain(NULL),
 	m_pContext(NULL),
-	m_pRenderTargetView(NULL)
+	m_pRenderTargetView(NULL),
+	m_pPSSamplerState(NULL)
 {
 	SetClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 }
@@ -46,6 +47,12 @@ void RenderManager::Cleanup()
 		m_pSwapChain = NULL;
 	}
 
+	if (m_pPSSamplerState)
+	{
+		m_pPSSamplerState->Release();
+		m_pPSSamplerState = NULL;
+	}
+
 	if (m_pContext)
 	{
 		m_pContext->Release();
@@ -75,7 +82,12 @@ HRESULT RenderManager::InitDevice(HWND hWnd)
 	swapChainDesc.SampleDesc.Quality = 0;
 	swapChainDesc.Windowed = TRUE;
 
-	HRESULT hr = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, m_featureLevels, 1, D3D11_SDK_VERSION, &swapChainDesc, &m_pSwapChain, &m_pDevice, NULL, &m_pContext);
+	UINT flags = 0;
+#ifdef _DEBUG
+	flags |= D3D11_CREATE_DEVICE_DEBUG;
+#endif
+
+	HRESULT hr = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, flags, m_featureLevels, 1, D3D11_SDK_VERSION, &swapChainDesc, &m_pSwapChain, &m_pDevice, NULL, &m_pContext);
 	if (FAILED(hr))
 	{
 		return hr;
@@ -104,12 +116,25 @@ HRESULT RenderManager::InitDevice(HWND hWnd)
 	viewport.TopLeftY = 0.0f;
 	m_pContext->RSSetViewports(1, &viewport);
 
+	D3D11_SAMPLER_DESC desc;
+	ZeroMemory(&desc, sizeof(D3D11_SAMPLER_DESC));
+	desc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	desc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	desc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+	desc.MaxLOD = 0;
+	desc.MinLOD = 0;
+	desc.MipLODBias = 0;
+	hr = m_pDevice->CreateSamplerState(&desc, &m_pPSSamplerState);
+
 	return hr;
 }
 
 void RenderManager::Begin()
 {
 	m_pContext->ClearRenderTargetView(m_pRenderTargetView, m_clearColor);
+
+	m_pContext->PSSetSamplers(0, 1, &m_pPSSamplerState);
 	SetBlendState();
 }
 

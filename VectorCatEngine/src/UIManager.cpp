@@ -6,8 +6,9 @@
 #include "global.h"
 #include "OverlayGrid.h"
 
-UIManager::UIManager() :
-m_currentViewScale(1.0f)
+UIManager::UIManager(GameManager* gameManager) :
+m_currentViewScale(1.0f),
+m_pGameManager(gameManager)
 {
 	
 }

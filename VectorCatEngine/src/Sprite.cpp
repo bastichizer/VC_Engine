@@ -6,19 +6,21 @@
 #include "AssetManager.h"
 #include <d3dcompiler.h>
 #include "Quasar\QMaths.h"
+#include "UIManager.h"
 
 ID3D11PixelShader* Sprite::m_pPS = NULL;
 ID3D11VertexShader* Sprite::m_pVS = NULL;
 ID3D11InputLayout* Sprite::m_pVertexLayout = NULL;
 ID3D11SamplerState* Sprite::m_pSamplerState = NULL;
 
-Sprite::Sprite(int width, int height, int posX, int posY) :
+Sprite::Sprite(int width, int height, int posX, int posY, UIManager* uiManager) :
 m_pVertexBuffer(NULL),
 m_pSpriteTexture(NULL),
 m_pSpriteConstantBuffer(NULL),
 m_width(width),
 m_height(height),
-m_scale(XMFLOAT2(1.0f, 1.0f))
+m_scale(XMFLOAT2(1.0f, 1.0f)),
+m_pUIManager(uiManager)
 {
 	m_pos = XMINT2(posX, posY);
 }
@@ -234,13 +236,15 @@ void Sprite::Render(Camera* cam)
 	RenderManager::Get()->GetContext()->UpdateSubresource(m_pSpriteConstantBuffer, 0, NULL, &m_spriteConstants, 0, 0);
 	RenderManager::Get()->GetContext()->VSSetConstantBuffers(0, 1, &m_pSpriteConstantBuffer);
 	RenderManager::Get()->GetContext()->PSSetConstantBuffers(0, 1, &m_pSpriteConstantBuffer);
+	ID3D11SamplerState* pSampler = RenderManager::Get()->GetSamplerState();
+	RenderManager::Get()->GetContext()->PSSetSamplers(0, 1, &pSampler);
 
 	UINT stride = sizeof(Vertex);
 	UINT offset = 0;
 	RenderManager::Get()->GetContext()->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
 	RenderManager::Get()->GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 	
-	RenderManager::Get()->GetContext()->Draw(6, 0);
+	RenderManager::Get()->GetContext()->Draw(4, 0);
 }
 
 // shader compile function lifted from d3d samples

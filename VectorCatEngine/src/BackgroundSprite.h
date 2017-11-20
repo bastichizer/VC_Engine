@@ -7,11 +7,12 @@
 class BackgroundSprite : public Sprite
 {
 public:
-	BackgroundSprite(int width, int height, int posX, int posY, WCHAR* texturePath);
+	BackgroundSprite(int width, int height, int posX, int posY, WCHAR* texturePath, UIManager* uiManager);
 	virtual ~BackgroundSprite();
 
 	void SetScrollX(bool v) { m_bScrollX = v; }
 	void SetScrollY(bool v) { m_bScrollY = v; }
+	void SetVel(QE::Vector2f v) { m_vel = v; }
 
 	void Render(Camera* cam) override;
 

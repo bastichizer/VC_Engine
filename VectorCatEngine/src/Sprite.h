@@ -16,6 +16,8 @@
 #include <DirectXMath.h>
 using namespace DirectX;
 
+class UIManager;
+
 struct Vertex
 {
 	XMFLOAT3 pos;
@@ -25,7 +27,7 @@ struct Vertex
 __declspec(align(16)) class Sprite
 {
 public:
-	Sprite(int width, int height, int posX, int posY);
+	Sprite(int width, int height, int posX, int posY, UIManager* uiManager);
 	virtual ~Sprite();
 
 	// ensure 16 byte alignment for D3D XMMATRIX 
@@ -55,6 +57,8 @@ protected:
 	ID3D11Resource* m_pSpriteTexture;
 	ID3D11ShaderResourceView* m_pSpriteShaderResourceView;
 	ID3D11Buffer* m_pSpriteConstantBuffer;
+
+	UIManager* m_pUIManager;
 
 	struct CB
 	{

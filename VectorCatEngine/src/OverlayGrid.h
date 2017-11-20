@@ -11,7 +11,7 @@ using namespace std;
 __declspec(align(16)) class OverlayGrid : public Sprite
 {
 public:
-	OverlayGrid(int width, int height, int posX, int posY, int offsetX, int offsetY, int gridSideLength, int gridCenterX, int gridCenterY, WCHAR* filename);
+	OverlayGrid(int width, int height, int posX, int posY, int offsetX, int offsetY, int gridSideLength, int gridCenterX, int gridCenterY, WCHAR* filename, UIManager* uiManager);
 	~OverlayGrid();
 
 	// ensure 16 byte alignment for D3D XMMATRIX 

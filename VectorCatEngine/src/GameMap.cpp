@@ -4,7 +4,7 @@
 
 #include "GameMap.h"
 
-GameMap::GameMap(int sizeX, int sizeY, int posX, int posY, WCHAR* texturePath) : Sprite::Sprite(sizeX, sizeY, posX, posY),
+GameMap::GameMap(int sizeX, int sizeY, int posX, int posY, WCHAR* texturePath, UIManager* uiManager) : Sprite::Sprite(sizeX, sizeY, posX, posY, uiManager),
 m_currentScale(1.0f)
 {
 	Init(texturePath);

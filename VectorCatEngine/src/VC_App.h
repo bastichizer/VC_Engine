@@ -5,6 +5,8 @@
 #include "Quasar\QMaths.h"
 #include "global.h"
 
+class GameManager;
+
 class VC_App
 {
 public:
@@ -29,6 +31,8 @@ protected:
 	uint32 m_prevTime;
 	uint32 m_currentTime;
 	uint32 m_tick;
+
+	GameManager* m_pGameManager;
 
 private:
 };

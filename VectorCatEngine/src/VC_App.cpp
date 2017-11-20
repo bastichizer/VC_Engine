@@ -1,14 +1,18 @@
 #include "VC_App.h"
 #include "RenderManager.h"
+#include "GameManager.h"
 
 VC_App::VC_App()
 {
-
+	m_pGameManager = NULL;
 }
 
 VC_App::~VC_App()
 {
-
+	if (m_pGameManager)
+	{
+		delete m_pGameManager;
+	}
 }
 
 void VC_App::Init()
@@ -24,6 +28,7 @@ void VC_App::Update()
 {
 	if (m_bIsStartFrame)
 	{
+		m_bIsStartFrame = false;
 		return;
 	}
 

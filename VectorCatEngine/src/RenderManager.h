@@ -33,6 +33,7 @@ public:
 
 	ID3D11Device* GetDevice() { return m_pDevice; }
 	ID3D11DeviceContext* GetContext() { return m_pContext; }
+	ID3D11SamplerState* GetSamplerState() { return m_pPSSamplerState; }
 
 	void SetBlendState();
 
@@ -48,6 +49,8 @@ private:
 	ID3D11DeviceContext* m_pContext;
 	// render target view
 	ID3D11RenderTargetView* m_pRenderTargetView;
+
+	ID3D11SamplerState* m_pPSSamplerState;
 
 	const D3D_FEATURE_LEVEL m_featureLevels[1] = { D3D_FEATURE_LEVEL_11_0 };
 

@@ -10,7 +10,7 @@
 __declspec(align(16)) class GameMap : public Sprite
 {
 public:
-	GameMap(int sizeX, int sizeY, int posX, int posY, WCHAR* texturePath);
+	GameMap(int sizeX, int sizeY, int posX, int posY, WCHAR* texturePath, UIManager* uiManager);
 	~GameMap();
 
 	// ensure 16 byte alignment for D3D XMMATRIX 

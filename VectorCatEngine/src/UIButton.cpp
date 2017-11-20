@@ -6,8 +6,8 @@
 #include "UIManager.h"
 #include "global.h"
 
-UIButton::UIButton(int width, int height, int posX, int posY, float defaultBrightness, float hoverBrightness, float pressedBrightness, WCHAR* filename)
-: Sprite(width, height, posX, posY),
+UIButton::UIButton(int width, int height, int posX, int posY, float defaultBrightness, float hoverBrightness, float pressedBrightness, WCHAR* filename, UIManager* uiManager)
+: Sprite(width, height, posX, posY, uiManager),
 m_defaultBrightness(defaultBrightness),
 m_hoverBrightness(hoverBrightness),
 m_pressedBrightness(pressedBrightness),

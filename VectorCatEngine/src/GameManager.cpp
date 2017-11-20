@@ -5,10 +5,13 @@
 #include "GameManager.h"
 #include "global.h"
 #include "InputManager.h"
+#include "UIManager.h"
+#include "VC_App.h"
 
-GameManager::GameManager()
+GameManager::GameManager(VC_App* app) :
+m_pApp(app)
 {
-	m_pUIManager = new UIManager();
+	m_pUIManager = new UIManager(this);
 	//m_pUIManager->SetCurrentExperience(0.5f);
 	//m_pUIManager->SetCurrentHappiness(0.8f);
 }

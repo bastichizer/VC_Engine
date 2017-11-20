@@ -10,17 +10,20 @@
 #include "Delegate.h"
 #include "UIButton.h"
 #include "tinyxml2-master\tinyxml2.h" // TinyXML2 lib used for xml parsing
+#include "GameManager.h"
 #include <vector>
 using namespace std;
 
 class UIManager
 {
 public:
-	UIManager();
+	UIManager(GameManager* gameManager);
 	virtual ~UIManager();
 
 	virtual void Update();
 	virtual void Render(Camera* cam);
+
+	GameManager* GetGameManager() { return m_pGameManager; }
 
 protected:
 	vector<Sprite*> m_backgroundVector; // background sprite elements - generally background scenery type stuff
@@ -30,6 +33,8 @@ protected:
 	float m_currentViewScale; // the scale of the background and midground elements for zooming
 
 	vector<Delegate<void, int>*> m_buttonDelegates;
+
+	GameManager* m_pGameManager;
 };
 
 #endif // UIMANAGER_H

@@ -5,7 +5,8 @@
 #include "OverlayGrid.h"
 #include "global.h"
 
-OverlayGrid::OverlayGrid(int width, int height, int posX, int posY, int offsetX, int offsetY, int gridSideLength, int gridCenterX, int gridCenterY, WCHAR* filename) : Sprite(width, height, posX, posY),
+OverlayGrid::OverlayGrid(int width, int height, int posX, int posY, int offsetX, int offsetY, int gridSideLength, int gridCenterX, int gridCenterY, WCHAR* filename, UIManager* uiManager) : 
+Sprite(width, height, posX, posY, uiManager),
 m_displayGrid(true),
 m_offsetX(offsetX),
 m_offsetY(offsetY),
