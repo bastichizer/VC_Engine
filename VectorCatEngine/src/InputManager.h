@@ -57,6 +57,7 @@ public:
 	MiddleMouseButtonStatus GetMiddleMouseButton();
 	RightMouseButtonStatus GetRightMouseButton();
 	void GetMouseMove(int &mouseX, int &mouseY);
+	void GetCalculatedMouseMove(int &mouseX, int &mouseY);
 	LPPOINT GetMousePosition();
 	void PushLeftMouseButtonDelegate(Delegate<void, LeftMouseButtonStatus>* del);
 	void PushMiddleMouseButtonDelegate(Delegate<void, MiddleMouseButtonStatus>* del);
@@ -73,6 +74,9 @@ private:
 	int m_iMouseMoveX;
 	int m_iMouseMoveY;
 	POINT* m_pMousePos;
+	POINT m_prevMousePos;
+	int m_calculatedMouseMoveX;
+	int m_calculatedMouseMoveY;
 
 	bool m_bLeftButtonIsDown;
 	bool m_bLeftButtonWasDown;

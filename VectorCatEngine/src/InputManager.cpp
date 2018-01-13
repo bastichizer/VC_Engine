@@ -68,6 +68,7 @@ void InputManager::ProcessRawInput(HRAWINPUT rawInput)
 
 	if (raw->header.dwType == RIM_TYPEMOUSE)
 	{
+		raw->data.mouse.usFlags = 0;
 		m_iMouseMoveX = raw->data.mouse.lLastX;
 		m_iMouseMoveY = raw->data.mouse.lLastY;
 
@@ -288,6 +289,7 @@ void InputManager::ProcessRawInput(HRAWINPUT rawInput)
 
 void InputManager::ProcessMousePos()
 {
+	m_prevMousePos = *m_pMousePos;
 	if (GetCursorPos(m_pMousePos))
 	{
 		if (!ScreenToClient(hWnd, m_pMousePos))
@@ -299,6 +301,9 @@ void InputManager::ProcessMousePos()
 	{
 		//QE::ErrorExit(L"QInput::ProcessMousePos()");
 	}
+
+	m_calculatedMouseMoveX = m_pMousePos->x - m_prevMousePos.y;
+	m_calculatedMouseMoveY = m_pMousePos->y - m_prevMousePos.y;
 }
 
 InputManager::LeftMouseButtonStatus InputManager::GetLeftMouseButton()
@@ -320,6 +325,12 @@ void InputManager::GetMouseMove(int &mouseX, int &mouseY)
 {
 	mouseX = m_iMouseMoveX;
 	mouseY = m_iMouseMoveY;
+}
+
+void InputManager::GetCalculatedMouseMove(int &mouseX, int &mouseY)
+{
+	mouseX = m_calculatedMouseMoveX;
+	mouseY = m_calculatedMouseMoveY;
 }
 
 LPPOINT InputManager::GetMousePosition()
